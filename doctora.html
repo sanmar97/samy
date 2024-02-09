@@ -1,0 +1,202 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Memorama - Dra. Sam</title>
+<style>
+  body {
+    font-family: Arial, sans-serif;
+    text-align: center;
+    margin: 0;
+    padding: 0;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    justify-content: center;
+    min-height: 100vh;
+    position: relative;
+    background-color: #f3f3f3;
+  }
+  h1, h2, p {
+    color: #000; /* Color negro para el texto */
+  }
+  .game-container {
+    position: relative;
+    z-index: 1;
+    display: grid;
+    grid-template-columns: repeat(4, 1fr);
+    grid-template-rows: repeat(4, 1fr); /* 4 filas ahora */
+    gap: 0;
+    margin-top: 20px;
+    border-radius: 10px;
+    padding: 10px;
+    box-shadow: 0 0 10px rgba(0, 0, 0, 0.3); /* Sombra para resaltar las cartas */
+    width: 400px; /* Tamaño total del contenedor */
+    height: 400px; /* Ajuste para las 4 filas */
+  }
+  .card {
+    border: 2px solid purple; /* Borde morado para las cartas */
+    border-radius: 5px;
+    background-color: #f0f0f0;
+    cursor: pointer;
+    transition: transform 0.3s ease, opacity 0.3s ease; /* Transición de opacidad */
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    position: relative;
+    z-index: 2; /* Asegurar que las cartas estén por encima del fondo */
+  }
+  .card img {
+    max-width: 100%;
+    max-height: 100%;
+    display: none; /* Ocultar las imágenes al principio */
+  }
+  .background-image {
+    position: fixed;
+    top: 65%;
+    left: 50%;
+    transform: translate(-50%, -50%);
+    z-index: 0; /* Asegurar que el fondo esté detrás de todo */
+    opacity: 0.9; /* Opacidad baja para mostrar las cartas sobre el fondo */
+    pointer-events: none; /* Evitar que el fondo afecte la interacción con las cartas */
+    width: 100%; /* Reducir el ancho en un 20% */
+    height: 60%; /* Reducir la altura en un 20% */
+  }
+  .hidden {
+    display: none;
+  }
+</style>
+</head>
+<body>
+  <h1>Dra. Sam</h1>
+  <h2>Une las piezas para ver algo bonito y descubrir el mensaje</h2>
+  <div class="game-container">
+    <!-- Cartas barajadas aleatoriamente -->
+    <div class="card" data-framework="1">
+      <img src="https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcQI8xxi7wcB6HyjfuoROJE5GSgh6qx3ddZO0T10ry3Lkc9tOqKMH1XCETSusD1gbaLQgww&usqp=CAU" alt="Ilustración 1">
+    </div>
+    <div class="card" data-framework="2">
+      <img src="https://media.istockphoto.com/id/843297940/es/vector/icono-plano-ambulancia-medicina-y-salud-transporte-signo-vector-graphics-un-patr%C3%B3n-s%C3%B3lido-de.jpg?s=612x612&w=0&k=20&c=sBiLlsh2gZZ5WAsBZ7Fx6ikEV80byJna9LtIu3idjR4=" alt="Ilustración 2">
+    </div>
+    <div class="card" data-framework="3">
+      <img src="https://img.freepik.com/vector-premium/ilustracion-hermosa-doctora-dedo-senalador-diseno-personajes-kawaii-lindo_380474-21.jpg" alt="Ilustración 3">
+    </div>
+    <div class="card" data-framework="4">
+      <img src="https://img.freepik.com/vector-premium/diseno-dibujos-animados-vacunas-e-inyecciones_274619-1590.jpg" alt="Ilustración 4">
+    </div>
+    <div class="card" data-framework="5">
+      <img src="https://img.freepik.com/vector-premium/etiqueta-logotipo-icono-estetoscopio-dibujo-estilo-plano-dibujos-animados-equipo-medico-que-examina-condicion-latido-corazon-paciente-concepto-excelencia-servicio-atencion-medica-ilustracion-vector-diseno-grafico_620206-3225.jpg" alt="Ilustración 5">
+    </div>
+    <div class="card" data-framework="6">
+      <img src="https://st.depositphotos.com/1526816/1818/v/450/depositphotos_18188295-stock-illustration-hospital.jpg" alt="Ilustración 6">
+    </div>
+    <div class="card" data-framework="7">
+      <img src="https://img.freepik.com/vector-premium/ilustracion-rinoplastia-diseno-plano-dibujado-mano_23-2149331433.jpg" alt="Ilustración 7">
+    </div>
+    <div class="card" data-framework="8">
+      <img src="https://i.pinimg.com/474x/4b/c5/54/4bc55466fd54454e31ca41f7c9d27fa2.jpg" alt="Ilustración 8">
+    </div>
+    <!-- Cartas adicionales -->
+    <div class="card" data-framework="1">
+      <img src="https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcQI8xxi7wcB6HyjfuoROJE5GSgh6qx3ddZO0T10ry3Lkc9tOqKMH1XCETSusD1gbaLQgww&usqp=CAU" alt="Ilustración 1">
+    </div>
+    <div class="card" data-framework="2">
+      <img src="https://media.istockphoto.com/id/843297940/es/vector/icono-plano-ambulancia-medicina-y-salud-transporte-signo-vector-graphics-un-patr%C3%B3n-s%C3%B3lido-de.jpg?s=612x612&w=0&k=20&c=sBiLlsh2gZZ5WAsBZ7Fx6ikEV80byJna9LtIu3idjR4=" alt="Ilustración 2">
+    </div>
+    <div class="card" data-framework="3">
+      <img src="https://img.freepik.com/vector-premium/ilustracion-hermosa-doctora-dedo-senalador-diseno-personajes-kawaii-lindo_380474-21.jpg" alt="Ilustración 3">
+    </div>
+    <div class="card" data-framework="4">
+      <img src="https://img.freepik.com/vector-premium/diseno-dibujos-animados-vacunas-e-inyecciones_274619-1590.jpg" alt="Ilustración 4">
+    </div>
+    <div class="card" data-framework="5">
+      <img src="https://img.freepik.com/vector-premium/etiqueta-logotipo-icono-estetoscopio-dibujo-estilo-plano-dibujos-animados-equipo-medico-que-examina-condicion-latido-corazon-paciente-concepto-excelencia-servicio-atencion-medica-ilustracion-vector-diseno-grafico_620206-3225.jpg" alt="Ilustración 5">
+    </div>
+    <div class="card" data-framework="6">
+      <img src="https://st.depositphotos.com/1526816/1818/v/450/depositphotos_18188295-stock-illustration-hospital.jpg" alt="Ilustración 6">
+    </div>
+    <div class="card" data-framework="7">
+      <img src="https://img.freepik.com/vector-premium/ilustracion-rinoplastia-diseno-plano-dibujado-mano_23-2149331433.jpg" alt="Ilustración 7">
+    </div>
+    <div class="card" data-framework="8">
+      <img src="https://i.pinimg.com/474x/4b/c5/54/4bc55466fd54454e31ca41f7c9d27fa2.jpg" alt="Ilustración 8">
+    </div>
+  </div>
+  <!-- Coloca la imagen de fondo debajo de las cartas -->
+  <img class="background-image" src="https://i.ibb.co/4NYP5pF/SAMMY.jpg" alt="SAMMY">
+<script>
+  const cards = document.querySelectorAll('.card');
+  let hasFlippedCard = false;
+  let lockBoard = false;
+  let firstCard, secondCard;
+  let pairsMatched = 0;
+
+  function flipCard() {
+    if (lockBoard) return;
+    if (this === firstCard) return;
+
+    this.querySelector('img').style.display = 'block';
+
+    if (!hasFlippedCard) {
+      hasFlippedCard = true;
+      firstCard = this;
+      return;
+    }
+
+    secondCard = this;
+    checkForMatch();
+  }
+
+  function checkForMatch() {
+    let isMatch = firstCard.dataset.framework === secondCard.dataset.framework;
+
+    isMatch ? disableCards() : unflipCards();
+  }
+
+  function disableCards() {
+    firstCard.removeEventListener('click', flipCard);
+    secondCard.removeEventListener('click', flipCard);
+
+    pairsMatched++;
+
+    if (pairsMatched === 8) {
+      // Todas las cartas han sido emparejadas
+      alert("¿Te gustaría tener una cita conmigo?");
+    }
+
+    setTimeout(() => {
+      firstCard.style.visibility = 'hidden';
+      secondCard.style.visibility = 'hidden';
+      resetBoard();
+    }, 1000);
+  }
+
+  function unflipCards() {
+    lockBoard = true;
+
+    setTimeout(() => {
+      firstCard.querySelector('img').style.display = 'none';
+      secondCard.querySelector('img').style.display = 'none';
+
+      resetBoard();
+    }, 1000);
+  }
+
+  function resetBoard() {
+    [hasFlippedCard, lockBoard] = [false, false];
+    [firstCard, secondCard] = [null, null];
+  }
+
+  // Barajar cartas al cargar la página
+  (function shuffle() {
+    cards.forEach(card => {
+      let randomPos = Math.floor(Math.random() * 16);
+      card.style.order = randomPos;
+    });
+  })();
+
+  cards.forEach(card => card.addEventListener('click', flipCard));
+</script>
+</body>
+</html>
